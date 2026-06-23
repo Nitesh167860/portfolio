@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nitesh Portfolio</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="work.css">
+<link rel="stylesheet" href="about.css">
+</head>
+<body>
+
+<div class="page-transition active"></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container header-content">
+    <div class="logo">Nitesh<span>Portfolio</span></div>
+
+    <nav class="nav" >
+      <a href="#index">Home</a>
+      <a href="#about">About</a>
+      <a href="#work">Projects</a>
+      <a href="#contact">Contact</a>
+      
+    </nav>
+
+    <div class="right-controls">
+      <button class="theme-toggle" aria-label="Toggle light and dark theme">🌙</button>
+      <div class="menu-toggle" >☰</div>
+      
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="index" class="hero scroll-animate">
+  <div class="container hero-grid">
+
+    <!-- LEFT -->
+    <div class="hero-text">
+      <h1>Hi, I'm <span>Nitesh</span></h1>
+      <h2 class="typing"></h2>
+      <p>Building modern web applications with clean code, creative design, and seamless user experiences.</p>
+      <button id="viewWorkBtn">View My Work</button>
+      <button class="resume-btn">Resume</button>
+
+    </div>
+    <!-- RESUME MODAL -->
+<div class="resume-modal" id="resumeModal">
+  <div class="resume-box">
+    <div class="resume-header">
+      <h3>My Resume</h3>
+      <span class="close-resume">&times;</span>
+    </div>
+
+    <div class="resume-content">
+      <iframe id="resumeFrame"></iframe>
+
+    </div>
+
+    <div class="resume-actions">
+      <a href="resume.pdf" download class="download-btn">⬇ Download Resume</a>
+    </div>
+  </div>
+</div>
+
+
+   <!-- RIGHT IMAGE -->
+<div class="hero-image">
+
+  <!-- SVG FILTER -->
+  <svg class="liquid-svg">
+    <filter id="liquid">
+      <feTurbulence id="turbulence"
+        baseFrequency="0.01"
+        numOctaves="3"
+        seed="2">
+        <animate
+          attributeName="baseFrequency"
+          dur="8s"
+          values="0.01;0.02;0.01"
+          repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" scale="20"/>
+    </filter>
+  </svg>
+
+  <!-- WATER IMAGE -->
+  <div class="image-card liquid">
+    <img src="210305105014.jpg" alt="Nitesh">
+  </div>
+
+
+</div>
+
+
+  </div>
+</section>
+<main id="about" class="about-modern container">
+<section class="section scroll-animate">
+  <h2>About me</h2>
+</section>
+    
+  <!-- HERO SPLIT -->
+  <section class="about-hero scroll-animate">
+    
+    <div class="about-left">
+       <div class="hero-text">
+      <h1>Hi, I'm <span>Nitesh</span></h1>
+      <h2 class="typing">Full Stack Web Developer</h2>
+     <p>
+      Passionate Web Developer and Computer Science Engineering Student specializing in modern web technologies and responsive user interfaces.
+<br>
+I enjoy transforming ideas into real-world digital solutions through clean code, creative design, and efficient problem-solving.
+     </p>
+      
+     
+    </div>
+    </div>
+
+    <div class="about-right glass">
+      <h2>Quick Facts</h2>
+      <ul>
+        <li>💻 Name: Vaghela Niteshkumar Natvarbhai</li>
+        <li>🎓 Education: B.Tech in Computer Science Engineering</li>
+        <li>🏫 University: Parul University, Vadodara</li>
+        <li>📍 Location: Ahmedabad, Gujarat, India</li>
+        <li>💼 Role: Web Developer</li>
+        <li>🚀 Experience: Web Developer Intern at Arth Consultancy Service</li>
+        <li>🛠  Skill : HTML • CSS • JavaScript • PHP • MySQL • Git • GitHub</li>
+        <li>📂 Websites & Creative Projects</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TIMELINE 
+  <section class="timeline scroll-animate" >
+   
+<section class="section scroll-animate">
+  <h2>My Journey</h2>
+</section>
+    <div class="timeline-item">
+      <span>2021</span>
+      <div>
+        <h3>Started Coding</h3>
+        <p>Learned HTML, CSS, and basic programming concepts.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <span>2023</span>
+      <div>
+        <h3>Full Stack Development</h3>
+        <p>Built PHP, MySQL, and JavaScript-based real-world projects.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <span>2024</span>
+      <div>
+        <h3>Internship</h3>
+        <p>Worked as Web Developer Intern at Arth Consultancy Service.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <span>2025</span>
+      <div>
+        <h3>Graduation & Advanced Projects</h3>
+        <p>Created AI-powered apps and modern UI-based platforms.</p>
+      </div>
+    </div>
+  </section>-->
+
+</main>
+
+<main id="work" class="page-content container">
+
+<!-- PROJECTS -->
+<section class="section scroll-animate">
+  <h2>Projects</h2>
+
+<div class="project-grid">
+
+    <!-- Project 1 -->
+    <div class="project-card">
+
+        <div class="project-image">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200" alt="Inventory System">
+        </div>
+
+        <div class="project-content">
+
+            <h3>Inventory Management System</h3>
+
+            <span class="project-skill">
+                PHP • MySQL • JavaScript
+            </span>
+
+            <p>
+                Complete inventory management system with stock tracking,
+                billing, customer management, sales reports and admin panel.
+            </p>
+
+            <a href="project-details.html" class="project-btn">
+   View Project
+</a>
+
+        </div>
+
+    </div>
+
+    <!-- Project 2 -->
+    <div class="project-card">
+
+        <div class="project-image">
+            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200" alt="Attendance Portal">
+        </div>
+
+        <div class="project-content">
+
+            <h3>Attendance Portal</h3>
+
+            <span class="project-skill">
+                React • Node.js • MongoDB
+            </span>
+
+            <p>
+                Employee attendance tracking portal with dashboard,
+                authentication, reporting and admin controls.
+            </p>
+
+            <a href="project-details.html" class="project-btn">
+   View Project
+</a>
+
+        </div>
+
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card">
+
+        <div class="project-image">
+            <img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=1200" alt="AI Ecommerce">
+        </div>
+
+        <div class="project-content">
+
+            <h3>AI E-Commerce Website</h3>
+
+            <span class="project-skill">
+                PHP • MySQL • AI • JavaScript
+            </span>
+
+            <p>
+                Smart e-commerce platform with personalized search,
+                recommendations, wishlist and order tracking.
+            </p>
+
+            <a href="project-details.html" class="project-btn">
+   View Project
+</a>
+
+        </div>
+
+    </div>
+
+</div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section scroll-animate">
+  <h2>Experience</h2>
+  <div class="card">
+    <h3>Web Developer Intern</h3>
+    <p>Arth Consultancy Service</p>
+    <span>Dec 2024 – Feb 2025</span>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section class="section scroll-animate">
+  <h2>Certificates</h2>
+  <div class="card">
+    <p>✔ Full Stack Web Development</p>
+    <p>✔ Big Data Analytics</p>
+    <p>✔ JavaScript Advanced</p>
+  </div>
+ 
+</section>
+ 
+ 
+</main>
+
+<main id="contact" class="page-content">
+  <section class="contact-section scroll-animate">
+    <div class="container">
+      <h2>Contact Me</h2>
+      <p>Feel free to reach out for projects, collaborations, or just a friendly hello!</p>
+
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" required placeholder="Your Name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required placeholder="Your Email">
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" required placeholder="Your Message"></textarea>
+        </div>
+
+        <button type="submit">Send Message</button>
+      </form>
+
+      <div class="contact-info">
+        <p>Email: <a href="mailto:nitesh@example.com">vaghelanitesh782@gmail.com</a></p>
+        <p>Phone: <a href="tel:+919876543210">+91 9313494622</a></p>
+        <p>Location: Ahemdabad, India</p>
+      </div>
+    </div>
+  </section>
+  <div class="bubbles"></div>
+
+</main>
+
+<!--<div class="toggle" onclick="toggleSnakeCursor()">🐍 Cursor ON / OFF</div>-->
+<div class="wheel-btn" onclick="toggleSnakeCursor()">
+    <div class="wheel">
+
+        <div class="spoke"></div>
+        <div class="spoke"></div>
+        <div class="spoke"></div>
+        <div class="spoke"></div>
+
+        <div class="hub">
+            <span id="wheelIcon">🐍</span>
+        </div>
+
+    </div>
+</div>
+<!-- FOOTER -->
+<footer class="footer">
+  
+  <!-- BUBBLES -->
+  <div class="bubbles"></div>
+  <div class="container footer-content">
+    <p>&copy; <span id="year"></span> Nitesh Portfolio</p>
+    <div class="social-links">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+</footer>
+<!-- ===== SNAKE CURSOR CANVAS ===== -->
+<canvas id="snakeCursor"></canvas>
+
+
+<script src="script.js"></script>
+
+
+<script src="effect.js"></script>
+
+<script>
+const navLinks = document.querySelectorAll('.nav a');
+
+window.addEventListener('scroll', () => {
+
+    let currentSection = '';
+
+    navLinks.forEach(link => {
+
+        const targetId = link.getAttribute('href');
+        const section = document.querySelector(targetId);
+
+        if(section){
+
+            const sectionTop = section.offsetTop - 120;
+            const sectionHeight = section.offsetHeight;
+
+            if(window.scrollY >= sectionTop &&
+               window.scrollY < sectionTop + sectionHeight){
+
+                currentSection = targetId;
+            }
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+
+        if(link.getAttribute('href') === currentSection){
+            link.classList.add('active');
+        }
+    });
+
+});
+</script>
+
+<script>
+
+/* =========================
+   TOGGLE EFFECT
+========================= */
+
+const wheelBtn = document.getElementById("wheelBtn");
+const wheel = document.getElementById("wheel");
+
+let enabled = true;
+
+wheelBtn.addEventListener("click",()=>{
+
+    enabled = !enabled;
+
+    if(enabled){
+
+        wheel.classList.remove("off");
+
+    }else{
+
+        wheel.classList.add("off");
+
+    }
+
+});
+
+</script>
+</body>
+</html>
