@@ -275,17 +275,17 @@ body.light .footer p {
 @media (max-width: 768px) {
 
   .menu-toggle {
-    display: block;
+    display:flex;
   }
 
-  .nav {
+  nav {
     position: absolute;
     top: 70px;
-    right: 4px;
+    right: 0px;
     flex-direction: column;
     background: #020617;
-    width: 80px; /* SMALLER DROPDOWN */
-    padding: 15px;
+    width: 95px; /* SMALLER DROPDOWN */
+    padding: 10px;
     border-radius: 2px;
     display: none;
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
