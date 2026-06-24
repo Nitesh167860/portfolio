@@ -295,6 +295,7 @@ body.light .footer {
 
 body.light .nav a {
   color: #020617;
+  
 }
 
 body.light .hero-text p {
@@ -335,10 +336,22 @@ body.light form label {
 
   .nav.active {
     display: flex;
-    
   }
+
   body.light .nav {
-    background: #ffffff;
+    background: #ffffff !important;
+  }
+
+  body.light .nav a {
+    color: #111 !important;
+  }
+
+  body.light .nav a:hover {
+    color: #0284c7 !important;
+  }
+
+  body.light .nav a.active {
+    color: #0284c7 !important;
   }
 }
 
@@ -447,15 +460,7 @@ body.light form label {
   }
 }
 
-/* LIGHT MODE FIX 
-body.light .image-card.liquid {
-  background: linear-gradient(
-    135deg,
-    rgba(56,189,248,0.25),
-    #ffffff
-  );
-}
-*/
+
 
 /* ACTIVE NAV LINK */
 .nav a.active {
@@ -1269,206 +1274,6 @@ body.cursor-off #snakeCursor{
 }
 
 
-/* =========================
-   WHEEL BUTTON CONTAINER
-========================= 
-
-.wheel-btn{
-    position:fixed;
-    right:-55px;
-    bottom:40px;
-
-    width:110px;
-    height:110px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    cursor:pointer;
-    z-index:9999;
-
-    transition:right .8s cubic-bezier(.22,1,.36,1);
-}
-
-/* Slide Out 
-
-.wheel-btn:hover{
-    right:20px;
-}
-
-/* =========================
-   MAIN WHEEL
-========================= 
-
-.wheel{
-
-    position:relative;
-
-    width:100px;
-    height:100px;
-
-    border-radius:50%;
-
-    background:
-    radial-gradient(circle,
-    #334155,
-    #020617);
-
-    border:4px solid #38bdf8;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    box-shadow:
-    0 0 15px #38bdf8,
-    0 0 35px rgba(56,189,248,.5);
-
-    animation:spin 4s linear infinite;
-}
-
-/* Outer Ring 
-
-.wheel::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:82px;
-    height:82px;
-
-    border-radius:50%;
-
-    border:3px dashed #38bdf8;
-
-}
-
-/* Center Hub 
-
-.wheel::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:20px;
-    height:20px;
-
-    border-radius:50%;
-
-    background:#38bdf8;
-
-    box-shadow:
-    0 0 10px #38bdf8,
-    0 0 20px #38bdf8;
-}
-
-/* Wheel Spokes 
-
-.spoke{
-    position:absolute;
-    width:4px;
-    height:70px;
-    background:#38bdf8;
-    border-radius:20px;
-}
-
-.spoke:nth-child(1){
-    transform:rotate(0deg);
-}
-
-.spoke:nth-child(2){
-    transform:rotate(45deg);
-}
-
-.spoke:nth-child(3){
-    transform:rotate(90deg);
-}
-
-.spoke:nth-child(4){
-    transform:rotate(135deg);
-}
-
-/* Rotation 
-
-@keyframes spin{
-
-    from{
-        transform:rotate(0deg);
-    }
-
-    to{
-        transform:rotate(360deg);
-    }
-
-}
-
-/* Hover Speed Boost 
-
-.wheel-btn:hover .wheel{
-
-    animation-duration:1s;
-
-    box-shadow:
-    0 0 25px #38bdf8,
-    0 0 50px #38bdf8,
-    0 0 70px rgba(56,189,248,.7);
-}
-
-/* ON / OFF COLORS 
-
-.wheel.off{
-    border-color:#ef4444;
-
-    box-shadow:
-    0 0 20px #ef4444,
-    0 0 50px rgba(239,68,68,.6);
-}
-
-.wheel.off::before{
-    border-color:#ef4444;
-}
-
-.wheel.off .spoke{
-    background:#ef4444;
-}
-
-.wheel.off::after{
-    background:#ef4444;
-}
-
-/* Mobile 
-
-@media(max-width:768px){
-
-    .wheel-btn{
-        width:90px;
-        height:90px;
-        right:-45px;
-    }
-
-    .wheel{
-        width:80px;
-        height:80px;
-    }
-
-    .wheel::before{
-        width:65px;
-        height:65px;
-    }
-
-    .spoke{
-        height:55px;
-    }
-
-    .wheel-btn:hover{
-        right:10px;
-    }
-}
-*/
-
 /* ===================================
    PREMIUM SNAKE WHEEL BUTTON
 =================================== */
@@ -1851,25 +1656,6 @@ body {
   gap: 40px;
 }
 
-/* 3D PROJECT CARD 
-.project-card {
-  background: linear-gradient(145deg, #020617, #020617);
-  padding: 40px;
-  border-radius: 25px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-  transition: transform 0.15s ease, box-shadow 0.3s ease;
-  transform-style: preserve-3d;
-}
-
-.project-card h3 {
-  font-size: 22px;
-  margin-bottom: 10px;
-  
-}
-
-.project-card p {
-  color: #94a3b8;
-}*/
 
 /* EXPERIENCE & CERTIFICATE CARDS */
 .card {
@@ -2008,31 +1794,67 @@ body.light .footer p {
 
   .nav {
     position: absolute;
-    top: 70px;
-    right: 10px;
-    flex-direction: column;
-    background: rgba(2, 6, 23, 0.96);
-    width: min(240px, 90%);
-    padding: 16px;
-    border-radius: 16px;
+    top: 100%;
+    right: 0;
+
+    width: 220px;
+
     display: none;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-    align-items: flex-start;
-    gap: 12px;
-  }
+    flex-direction: column;
+
+    background: #08122f;
+
+    padding: 0;
+    margin: 0;
+
+    border-radius: 0 0 15px 15px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+
+    z-index: 9999;
+}
 
   .nav.active {
     display: flex;
   }
 
   .nav a {
+    display: block;
     width: 100%;
-    padding: 10px 0;
-  }
+    padding: 15px 20px;
 
-  body.light .nav {
-    background: #ffffff;
-  }
+    text-decoration: none;
+
+    color: #fff;
+
+    background: transparent !important;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.nav a:last-child{
+    border-bottom:none;
+}
+body.light .nav{
+    background:#ffffff !important;
+}
+
+body.light .nav a{
+    color:#111 !important;
+    border-bottom:1px solid rgba(0,0,0,.08);
+}
+
+body.light .nav a:hover {
+    color: #0284c7 !important;
+}
+
+body.light .nav a.active {
+    color: #0284c7 !important;
+}
+
+
 
   .hero h1 {
     font-size: 36px;
@@ -2227,33 +2049,7 @@ body.cursor-off #snakeCursor{
   display: none;
 }
 
-------------------
 
-
-
-
-/*
-
-.project-card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 20px 40px rgba(99,102,241,.3);
-}
-
-body.light .project-card {
- background:rgba(6, 22, 239, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: #111;
-  box-shadow:0 8px 30px rgba(201, 106, 230, 0.412);
-}
-
-
-body.light .project-card:hover{
-    box-shadow:0 20px 40px rgba(93, 95, 216, 0.592);
-}
-.project-card:hover{
-    transform:translateY(-10px);
-}
-*/
 
 
 /* =========================
@@ -2410,7 +2206,7 @@ body.light .project-card:hover{
 }
 
 /* FINAL MOBILE OVERRIDES */
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .header-content {
     flex-wrap: wrap !important;
     align-items: center !important;
@@ -2428,9 +2224,9 @@ body.light .project-card:hover{
   }
 
   .nav {
-    position: fixed !important;
+    position:absolute!important;
     top: 70px !important;
-    right: 1px !important;
+    right: 0px !important;
     width: min(160px, 60%) !important;
     padding: 10px !important;
     display: none !important;
@@ -2438,7 +2234,7 @@ body.light .project-card:hover{
     align-items: flex-start !important;
     gap: 12px !important;
     background: rgba(2, 6, 23, 0.96) !important;
-    border-radius: 18px !important;
+    border-radius: 4px !important;
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35) !important;
     z-index: 1001 !important;
   }
@@ -2483,8 +2279,8 @@ body.light .project-card:hover{
 
 @media (max-width: 600px) {
   .nav {
-    top: 64px !important;
-    width: calc(100% - 22px) !important;
+    top: 59px !important;
+    width: calc(30% - 22px) !important;
   }
 
   .project-image {
@@ -2495,108 +2291,21 @@ body.light .project-card:hover{
     font-size: 24px !important;
   }
 }
-/**.about-modern {
-  padding: 80px 0;
+
+/* LIGHT MODE MOBILE NAV OVERRIDES */
+body.light .nav,
+
+
+body.light .nav a {
+  color: #111 !important;
 }
 
-.about-hero {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 50px;
-  align-items: center;
+body.light .nav a:hover,
+body.light .nav a.active {
+  color: #0284c7 !important;
 }
 
-.about-left h1 {
-  font-size: 3rem;
-}
 
-.about-left h3 {
-  color: var(--accent);
-  margin: 10px 0;
-}
-
-.about-left p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-}
-
-.highlight {
-  margin-top: 20px;
-  font-weight: bold;
-}
-
-.glass {
-  backdrop-filter: blur(15px);
-  background: rgba(255,255,255,0.08);
-  border-radius: 20px;
-  padding: 30px;
-  border: 1px solid rgba(255,255,255,0.2);
-}
-
-.glass ul {
-  list-style: none;
-  padding: 0;
-}
-
-.glass li {
-  padding: 10px 0;
-}
-
-.timeline {
-  margin-top: 120px;
-}
-
-.timeline h2 {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.timeline-item {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 30px;
-  margin-bottom: 40px;
-}
-
-.timeline-item span {
-  font-weight:bold;
-  color: var(--accent);
-}
-
-.timeline-item h3 {
-  margin-bottom: 5px;
-}
-
-@media (max-width: 900px) {
-  .about-hero {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-width: 900px) {
-  .about-hero {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .timeline-item {
-    grid-template-columns: 1fr;
-  }
-}
-
-body.light .highlight p {
-  color: #020617;
-}
-body.light .glass {
-  background:rgba(6, 22, 239, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  color: #111;
-}
-
-body.light .timeline-item p {
-  color: #020617;
-}
-
-*/
 .container{
     width:90%;
     max-width:1200px;
