@@ -132,44 +132,6 @@ I enjoy transforming ideas into real-world digital solutions through clean code,
     </div>
   </section>
 
-  <!-- TIMELINE 
-  <section class="timeline scroll-animate" >
-   
-<section class="section scroll-animate">
-  <h2>My Journey</h2>
-</section>
-    <div class="timeline-item">
-      <span>2021</span>
-      <div>
-        <h3>Started Coding</h3>
-        <p>Learned HTML, CSS, and basic programming concepts.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <span>2023</span>
-      <div>
-        <h3>Full Stack Development</h3>
-        <p>Built PHP, MySQL, and JavaScript-based real-world projects.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <span>2024</span>
-      <div>
-        <h3>Internship</h3>
-        <p>Worked as Web Developer Intern at Arth Consultancy Service.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <span>2025</span>
-      <div>
-        <h3>Graduation & Advanced Projects</h3>
-        <p>Created AI-powered apps and modern UI-based platforms.</p>
-      </div>
-    </div>
-  </section>-->
 
 </main>
 
@@ -408,26 +370,22 @@ window.addEventListener('scroll', () => {
    TOGGLE EFFECT
 ========================= */
 
-const wheelBtn = document.getElementById("wheelBtn");
-const wheel = document.getElementById("wheel");
-
+const wheelBtn = document.querySelector(".wheel-btn");
+const wheel = document.querySelector(".wheel");
 let enabled = true;
 
-wheelBtn.addEventListener("click",()=>{
-
+if (wheelBtn && wheel) {
+  wheelBtn.addEventListener("click", () => {
     enabled = !enabled;
 
-    if(enabled){
-
-        wheel.classList.remove("off");
-
-    }else{
-
-        wheel.classList.add("off");
-
+    if (enabled) {
+      wheel.classList.remove("off");
+    } else {
+      wheel.classList.add("off");
     }
+  });
+}
 
-});
 
 </script>
 </body>
