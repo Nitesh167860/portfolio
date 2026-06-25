@@ -14,10 +14,12 @@
 <header class="header">
   <div class="container header-content">
     <div class="logo">Nitesh<span>Portfolio</span></div>
+    
 
     <nav class="nav" >
       <a href="#index">Home</a>
       <a href="#about">About</a>
+      <a href="#skills">Skills</a>
       <a href="#work">Projects</a>
       <a href="#contact">Contact</a>
       
@@ -134,7 +136,20 @@ I enjoy transforming ideas into real-world digital solutions through clean code,
 
 
 </main>
+<!-- skills-section -->
+<section id="skills" class="skills-section">
 
+    <section class="section scroll-animate">
+  <h2>Skills</h2>
+</section>
+
+    <div class="terminal">
+
+        <div id="skillsContainer"></div>
+
+    </div>
+
+</section>
 <main id="work" class="page-content container">
 
 <!-- PROJECTS -->
@@ -163,7 +178,7 @@ I enjoy transforming ideas into real-world digital solutions through clean code,
                 billing, customer management, sales reports and admin panel.
             </p>
 
-            <a href="project-details.html" class="project-btn">
+            <a href="storeinventery.html" class="project-btn">
    View Project
 </a>
 
@@ -171,33 +186,34 @@ I enjoy transforming ideas into real-world digital solutions through clean code,
 
     </div>
 
-    <!-- Project 2 -->
-    <div class="project-card">
+    <!-- Portfolio Website Project -->
+<div class="project-card">
 
-        <div class="project-image">
-            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200" alt="Attendance Portal">
-        </div>
+    <div class="project-image">
+        <img src="Screenshot 2026-06-25 002852.png" alt="Portfolio Website">
+    </div>
 
-        <div class="project-content">
+    <div class="project-content">
 
-            <h3>Attendance Portal</h3>
+        <h3>Personal Portfolio Website</h3>
 
-            <span class="project-skill">
-                React • Node.js • MongoDB
-            </span>
+        <span class="project-skill">
+    HTML5 • CSS3 • JavaScript • Responsive Design 
+</span>
 
-            <p>
-                Employee attendance tracking portal with dashboard,
-                authentication, reporting and admin controls.
-            </p>
+        <p>
+            A fully responsive personal portfolio website featuring
+            modern UI design, dark/light mode, smooth animations,
+            project showcase, skills section, and contact form.
+        </p>
 
-            <a href="project-details.html" class="project-btn">
-   View Project
-</a>
-
-        </div>
+        <a href="portfoliodetails.html" class="project-btn">
+            View Project
+        </a>
 
     </div>
+
+</div>
 
     <!-- Project 3 -->
     <div class="project-card">
@@ -329,6 +345,89 @@ I enjoy transforming ideas into real-world digital solutions through clean code,
 <script src="effect.js"></script>
 
 <script>
+
+  const skills = [
+
+"Frontend : HTML5, CSS3, JavaScript, Bootstrap",
+
+"Backend : PHP, Node.js",
+
+"Database : MySQL, MongoDB",
+
+"Tools & Platforms : Git, GitHub, VS Code, XAMPP, Notepad++",
+
+"Responsive Web Design",
+
+"Full Stack Web Development"
+
+];
+
+const container =
+document.getElementById("skillsContainer");
+
+let currentLine = 0;
+
+function typeLine(text,index,element,callback){
+
+    if(index < text.length){
+
+        element.innerHTML =
+        '<span class="prompt">></span>' +
+        text.substring(0,index+1) +
+        '<span class="cursor">|</span>';
+
+        setTimeout(()=>{
+            typeLine(
+                text,
+                index+1,
+                element,
+                callback
+            );
+        },50);
+
+    }else{
+
+        element.innerHTML =
+        '<span class="prompt">></span>' +
+        text;
+
+        callback();
+    }
+}
+
+function startTyping(){
+
+    if(currentLine >= skills.length)
+        return;
+
+    const line =
+    document.createElement("div");
+
+    line.className = "line";
+
+    container.appendChild(line);
+
+    typeLine(
+        skills[currentLine],
+        0,
+        line,
+        ()=>{
+
+            currentLine++;
+
+            setTimeout(
+                startTyping,
+                500
+            );
+        }
+    );
+}
+
+startTyping();
+
+
+
+
 const navLinks = document.querySelectorAll('.nav a');
 
 window.addEventListener('scroll', () => {
