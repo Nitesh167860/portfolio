@@ -510,6 +510,76 @@ body{
     .pages-grid{ grid-template-columns:1fr; }
 }
 
+@media (max-width: 992px) {
+  .project-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .project-info,
+  .project-gallery {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+
+  .project-name {
+    font-size: 2rem;
+  }
+
+  .main-image {
+    height: 260px;
+  }
+
+  .thumbnails {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .thumbnails img {
+    width: 72px;
+    height: 55px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-name {
+    font-size: 1.7rem;
+  }
+
+  .project-image {
+    height: 220px;
+  }
+
+  .feature-card {
+    padding: 16px;
+  }
+
+  .page-card {
+    padding: 16px;
+    font-size: 14px;
+  }
+}
+
 /* FOOTER SECTION */
 .main-footer {
     text-align: center;
@@ -790,7 +860,7 @@ body.cursor-off .hub{
 <body>
 
 <header class="navbar">
-    <a href="#" class="logo">Nitesh<span>Portfolio</span></a>
+    <a href="index.html" class="logo">Nitesh<span>Portfolio</span></a>
     <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle light and dark theme">
         🌙 
     </button>
