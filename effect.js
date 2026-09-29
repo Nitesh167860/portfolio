@@ -1,46 +1,72 @@
 (function () {
-  // prevent double init (important for SPA / page transitions)
+  // prevent double init
   if (window.__snakeCursorLoaded) return;
   window.__snakeCursorLoaded = true;
 
   const canvas = document.getElementById("snakeCursor");
   if (!canvas) return;
 
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", {
+    alpha: true
+  });
 
+  if (!ctx) return;
+
+  /* ===== DEVICE ===== */
+  const isMobile =
+    window.matchMedia("(pointer: coarse)").matches ||
+    window.innerWidth <= 768;
+
+  /* ===== CANVAS ===== */
   function resizeCursor() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
 
   resizeCursor();
-  window.addEventListener("resize", resizeCursor);
-
-  /* ===== STATE ===== */
-  let cursorEnabled = localStorage.getItem("snakeCursor") !== "off";
-
-  document.body.classList.toggle("cursor-off", !cursorEnabled);
-
-  /* ===== MOUSE + TOUCH ===== */
-  const mouse = {
-    x: innerWidth / 2,
-    y: innerHeight / 2
-  };
-
-  // Desktop mouse
-  window.addEventListener("mousemove", e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+  window.addEventListener("resize", resizeCursor, {
+    passive: true
   });
 
-  // Mobile touch
+  /* ===== STATE ===== */
+  let cursorEnabled =
+    localStorage.getItem("snakeCursor") !== "off";
+
+  document.body.classList.toggle(
+    "cursor-off",
+    !cursorEnabled
+  );
+
+  /* ===== POINTER ===== */
+  const mouse = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2
+  };
+
+  let targetX = mouse.x;
+  let targetY = mouse.y;
+
+  /* ===== DESKTOP ===== */
+  window.addEventListener(
+    "mousemove",
+    e => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    },
+    { passive: true }
+  );
+
+  /* ===== MOBILE TOUCH ===== */
   window.addEventListener(
     "touchstart",
     e => {
       if (!e.touches.length) return;
 
-      mouse.x = e.touches[0].clientX;
-      mouse.y = e.touches[0].clientY;
+      targetX = e.touches[0].clientX;
+      targetY = e.touches[0].clientY;
+
+      mouse.x = targetX;
+      mouse.y = targetY;
     },
     { passive: true }
   );
@@ -50,55 +76,136 @@
     e => {
       if (!e.touches.length) return;
 
-      mouse.x = e.touches[0].clientX;
-      mouse.y = e.touches[0].clientY;
+      targetX = e.touches[0].clientX;
+      targetY = e.touches[0].clientY;
     },
     { passive: true }
   );
 
   /* ===== SNAKE ===== */
+
+  // Desktop remains exactly 40
+  // Mobile uses fewer segments for smooth performance
+  const LEN = isMobile ? 24 : 40;
+
   const snake = [];
-  const LEN = 40;
   let hue = 0;
 
   for (let i = 0; i < LEN; i++) {
-    snake.push({ ...mouse });
+    snake.push({
+      x: mouse.x,
+      y: mouse.y
+    });
   }
 
   /* ===== THEME COLORS ===== */
   function getCursorColor() {
-    const isDark = document.body.classList.contains("dark");
+    const isDark =
+      document.body.classList.contains("dark");
 
     return isDark
-      ? { base: 180, glow: "#00fff7" }
-      : { base: 320, glow: "#ff4ecd" };
+      ? {
+          base: 180,
+          glow: "#00fff7"
+        }
+      : {
+          base: 320,
+          glow: "#ff4ecd"
+        };
   }
 
   /* ===== ANIMATION ===== */
-  function animateCursor() {
-    if (!cursorEnabled) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      requestAnimationFrame(animateCursor);
+  let lastFrame = 0;
+
+  function animateCursor(timestamp) {
+    requestAnimationFrame(animateCursor);
+
+    /*
+      Mobile:
+      Limit rendering slightly to reduce CPU/GPU load.
+      Desktop remains full speed.
+    */
+    if (
+      isMobile &&
+      timestamp - lastFrame < 20
+    ) {
       return;
     }
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    lastFrame = timestamp;
 
-    snake[0].x += (mouse.x - snake[0].x) * 0.25;
-    snake[0].y += (mouse.y - snake[0].y) * 0.25;
+    if (!cursorEnabled) {
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+      return;
+    }
+
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    /* ===== SMOOTH HEAD ===== */
+
+    const headSpeed = isMobile ? 0.18 : 0.25;
+
+    mouse.x +=
+      (targetX - mouse.x) * headSpeed;
+
+    mouse.y +=
+      (targetY - mouse.y) * headSpeed;
+
+    snake[0].x +=
+      (mouse.x - snake[0].x) *
+      headSpeed;
+
+    snake[0].y +=
+      (mouse.y - snake[0].y) *
+      headSpeed;
+
+    /* ===== BODY ===== */
+
+    const bodySpeed = isMobile
+      ? 0.28
+      : 0.35;
 
     for (let i = 1; i < snake.length; i++) {
       snake[i].x +=
-        (snake[i - 1].x - snake[i].x) * 0.35;
+        (snake[i - 1].x - snake[i].x) *
+        bodySpeed;
 
       snake[i].y +=
-        (snake[i - 1].y - snake[i].y) * 0.35;
+        (snake[i - 1].y - snake[i].y) *
+        bodySpeed;
     }
 
-    const theme = getCursorColor();
-    hue += 1.5;
+    /* ===== COLORS ===== */
 
-    for (let i = 0; i < snake.length - 1; i++) {
+    const theme = getCursorColor();
+
+    hue += isMobile ? 1 : 1.5;
+
+    /* ===== PERFORMANCE OPTIMIZATION ===== */
+
+    ctx.lineCap = "round";
+    ctx.shadowColor = theme.glow;
+
+    // Mobile uses lighter glow
+    ctx.shadowBlur = isMobile ? 8 : 18;
+
+    /* ===== DRAW ===== */
+
+    for (
+      let i = 0;
+      i < snake.length - 1;
+      i++
+    ) {
       ctx.beginPath();
 
       ctx.moveTo(
@@ -118,73 +225,101 @@
         ${1 - i / snake.length}
       )`;
 
-      ctx.lineWidth = 10 - i * 0.2;
-      ctx.lineCap = "round";
+      /*
+        Desktop:
+        Original 10 - i * 0.2
 
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = theme.glow;
+        Mobile:
+        Slightly lighter line
+      */
+      ctx.lineWidth = isMobile
+        ? 8 - i * 0.22
+        : 10 - i * 0.2;
 
       ctx.stroke();
     }
-
-    requestAnimationFrame(animateCursor);
   }
 
-  animateCursor();
+  requestAnimationFrame(animateCursor);
 
-  /* ===== GLOBAL TOGGLE (accessible from any page) ===== */
+  /* ===== GLOBAL TOGGLE ===== */
+
   window.toggleSnakeCursor = function () {
     cursorEnabled = !cursorEnabled;
 
     localStorage.setItem(
       "snakeCursor",
-      cursorEnabled ? "on" : "off"
+      cursorEnabled
+        ? "on"
+        : "off"
     );
 
     document.body.classList.toggle(
       "cursor-off",
       !cursorEnabled
     );
+
+    if (!cursorEnabled) {
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+    }
   };
 
   /* ===== THEME SYNC ===== */
-  document.addEventListener("click", e => {
-    if (e.target.closest(".theme-toggle")) {
-      document.body.classList.toggle("dark");
 
-      document.documentElement.style.setProperty(
-        "--toggle-color",
-        document.body.classList.contains("")
-          ? "#00fff7"
-          : "#00fff7"
-      );
+  document.addEventListener(
+    "click",
+    e => {
+      if (
+        e.target.closest(".theme-toggle")
+      ) {
+        document.body.classList.toggle(
+          "dark"
+        );
+
+        document.documentElement.style.setProperty(
+          "--toggle-color",
+          "#00fff7"
+        );
+      }
     }
-  });
+  );
 
 })();
 
+/* ===== SNAKE TOGGLE ICON ===== */
+
 window.addEventListener("load", () => {
-  const icon = document.getElementById("wheelIcon");
+  const icon =
+    document.getElementById("wheelIcon");
 
   if (!icon) return;
 
   icon.textContent =
-    localStorage.getItem("snakeCursor") === "off"
+    localStorage.getItem("snakeCursor") ===
+    "off"
       ? "💤"
       : "🐍";
 });
 
-const oldToggle = window.toggleSnakeCursor;
+const oldToggle =
+  window.toggleSnakeCursor;
 
 window.toggleSnakeCursor = function () {
   oldToggle();
 
-  const icon = document.getElementById("wheelIcon");
+  const icon =
+    document.getElementById("wheelIcon");
 
   if (!icon) return;
 
   icon.textContent =
-    localStorage.getItem("snakeCursor") === "off"
+    localStorage.getItem("snakeCursor") ===
+    "off"
       ? "💤"
       : "🐍";
 };
