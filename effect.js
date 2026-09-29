@@ -12,33 +12,63 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
+
   resizeCursor();
   window.addEventListener("resize", resizeCursor);
 
   /* ===== STATE ===== */
-  /* ===== STATE ===== */
-let cursorEnabled = localStorage.getItem("snakeCursor") !== "off";
+  let cursorEnabled = localStorage.getItem("snakeCursor") !== "off";
 
-document.body.classList.toggle("cursor-off", !cursorEnabled);
+  document.body.classList.toggle("cursor-off", !cursorEnabled);
 
+  /* ===== MOUSE + TOUCH ===== */
+  const mouse = {
+    x: innerWidth / 2,
+    y: innerHeight / 2
+  };
 
-  /* ===== MOUSE ===== */
-  const mouse = { x: innerWidth / 2, y: innerHeight / 2 };
+  // Desktop mouse
   window.addEventListener("mousemove", e => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
   });
+
+  // Mobile touch
+  window.addEventListener(
+    "touchstart",
+    e => {
+      if (!e.touches.length) return;
+
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    "touchmove",
+    e => {
+      if (!e.touches.length) return;
+
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
 
   /* ===== SNAKE ===== */
   const snake = [];
   const LEN = 40;
   let hue = 0;
 
-  for (let i = 0; i < LEN; i++) snake.push({ ...mouse });
+  for (let i = 0; i < LEN; i++) {
+    snake.push({ ...mouse });
+  }
 
   /* ===== THEME COLORS ===== */
   function getCursorColor() {
     const isDark = document.body.classList.contains("dark");
+
     return isDark
       ? { base: 180, glow: "#00fff7" }
       : { base: 320, glow: "#ff4ecd" };
@@ -58,8 +88,11 @@ document.body.classList.toggle("cursor-off", !cursorEnabled);
     snake[0].y += (mouse.y - snake[0].y) * 0.25;
 
     for (let i = 1; i < snake.length; i++) {
-      snake[i].x += (snake[i - 1].x - snake[i].x) * 0.35;
-      snake[i].y += (snake[i - 1].y - snake[i].y) * 0.35;
+      snake[i].x +=
+        (snake[i - 1].x - snake[i].x) * 0.35;
+
+      snake[i].y +=
+        (snake[i - 1].y - snake[i].y) * 0.35;
     }
 
     const theme = getCursorColor();
@@ -67,8 +100,16 @@ document.body.classList.toggle("cursor-off", !cursorEnabled);
 
     for (let i = 0; i < snake.length - 1; i++) {
       ctx.beginPath();
-      ctx.moveTo(snake[i].x, snake[i].y);
-      ctx.lineTo(snake[i + 1].x, snake[i + 1].y);
+
+      ctx.moveTo(
+        snake[i].x,
+        snake[i].y
+      );
+
+      ctx.lineTo(
+        snake[i + 1].x,
+        snake[i + 1].y
+      );
 
       ctx.strokeStyle = `hsla(
         ${theme.base + hue + i * 4},
@@ -79,8 +120,10 @@ document.body.classList.toggle("cursor-off", !cursorEnabled);
 
       ctx.lineWidth = 10 - i * 0.2;
       ctx.lineCap = "round";
+
       ctx.shadowBlur = 18;
       ctx.shadowColor = theme.glow;
+
       ctx.stroke();
     }
 
@@ -91,15 +134,18 @@ document.body.classList.toggle("cursor-off", !cursorEnabled);
 
   /* ===== GLOBAL TOGGLE (accessible from any page) ===== */
   window.toggleSnakeCursor = function () {
-  cursorEnabled = !cursorEnabled;
+    cursorEnabled = !cursorEnabled;
 
-  localStorage.setItem(
-    "snakeCursor",
-    cursorEnabled ? "on" : "off"
-  );
+    localStorage.setItem(
+      "snakeCursor",
+      cursorEnabled ? "on" : "off"
+    );
 
-  document.body.classList.toggle("cursor-off", !cursorEnabled);
-};
+    document.body.classList.toggle(
+      "cursor-off",
+      !cursorEnabled
+    );
+  };
 
   /* ===== THEME SYNC ===== */
   document.addEventListener("click", e => {
@@ -118,29 +164,27 @@ document.body.classList.toggle("cursor-off", !cursorEnabled);
 })();
 
 window.addEventListener("load", () => {
+  const icon = document.getElementById("wheelIcon");
 
-    const icon = document.getElementById("wheelIcon");
+  if (!icon) return;
 
-    if(!icon) return;
-
-    icon.textContent =
-        localStorage.getItem("snakeCursor") === "off"
-        ? "💤"
-        : "🐍";
+  icon.textContent =
+    localStorage.getItem("snakeCursor") === "off"
+      ? "💤"
+      : "🐍";
 });
 
 const oldToggle = window.toggleSnakeCursor;
 
-window.toggleSnakeCursor = function(){
+window.toggleSnakeCursor = function () {
+  oldToggle();
 
-    oldToggle();
+  const icon = document.getElementById("wheelIcon");
 
-    const icon = document.getElementById("wheelIcon");
+  if (!icon) return;
 
-    if(!icon) return;
-
-    icon.textContent =
-        localStorage.getItem("snakeCursor") === "off"
-        ? "💤"
-        : "🐍";
+  icon.textContent =
+    localStorage.getItem("snakeCursor") === "off"
+      ? "💤"
+      : "🐍";
 };
