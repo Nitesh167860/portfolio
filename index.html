@@ -105,11 +105,11 @@
           <h1>Hi, I'm <span>Nitesh</span></h1>
           <h2 class="typing">Full Stack Web Developer</h2>
           <p>
-            Passionate Web Developer and Computer Science Engineering Student specializing in modern web technologies
-            and responsive user interfaces.
+            I am a passionate Full Stack Web Developer with a background in Computer Science Engineering, specializing in building modern, responsive, and user-friendly web applications.
             <br>
-            I enjoy transforming ideas into real-world digital solutions through clean code, creative design, and
-            efficient problem-solving.
+            I work with React.js, TypeScript, JavaScript, Tailwind CSS, and Supabase to transform ideas into practical digital solutions. I enjoy developing real-world projects, creating clean user interfaces, and solving technical challenges through efficient and maintainable code.
+            <br>
+            I enjoy transforming ideas into real-world digital solutions through clean code, creative design, and efficient problem-solving. ye sahi likha hai ya update karna hai
           </p>
 
 
@@ -268,15 +268,1723 @@
   </div>
 </section>
     <!-- CERTIFICATES -->
-    <section class="section scroll-animate">
-      <h2>Certificates</h2>
-      <div class="card">
-        <p>✔ Full Stack Web Development</p>
-        <p>✔ Big Data Analytics</p>
-        <p>✔ JavaScript Advanced</p>
+    
+
+
+
+<!-- CERTIFICATES -->
+<section class="section scroll-animate" id="myCertificates">
+
+  <div class="cert-title-row">
+    <h2>Certificates</h2>
+    <button type="button" class="cert-plus-btn" id="certAddBtn"
+      aria-label="Add Certificate">+</button>
+  </div>
+
+  <div class="card cert-list" id="certList">
+    <p class="cert-empty">No certificates added yet.</p>
+  </div>
+
+  <!-- ADD / EDIT POPUP -->
+  <div class="cert-small-modal" id="certFormModal">
+    <div class="cert-small-box">
+
+      <div class="cert-popup-heading">
+        <h3 id="certFormHeading">Add Certificate</h3>
+        <button type="button" id="certFormClose" aria-label="Close">×</button>
       </div>
 
-    </section>
+      <form id="certForm">
+
+        <label for="certTitle">Certificate Title *</label>
+        <input id="certTitle" type="text"
+          placeholder="e.g. Full Stack Web Development" required>
+
+        <label for="certOrganization">Issuing Organization *</label>
+        <input id="certOrganization" type="text"
+          placeholder="e.g. Parul University" required>
+
+        <label for="certDate">Issue Date</label>
+        <input id="certDate" type="date">
+
+        <label for="certCredential">Credential ID</label>
+        <input id="certCredential" type="text"
+          placeholder="Credential ID (Optional)">
+
+        <label for="certDescription">Description</label>
+        <textarea id="certDescription"
+          placeholder="Write certificate details, skills learned, achievements..."
+          rows="5"></textarea>
+
+        <label class="cert-file-label" for="certFile">
+          <span>📎</span> Upload Certificate (PDF / JPG / PNG)
+        </label>
+
+        <input id="certFile" type="file"
+          accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png">
+
+        <small id="certFileName">No file selected</small>
+
+        <div class="cert-popup-actions">
+          <button type="button" id="certCancelBtn">Cancel</button>
+          <button type="submit" id="certSaveBtn">Save Certificate</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- VIEW POPUP -->
+  <div class="cert-small-modal" id="certViewModal">
+    <div class="cert-small-box cert-view-box">
+
+      <div class="cert-popup-heading">
+        <h3 id="certViewTitle">Certificate</h3>
+        <button type="button" id="certViewClose" aria-label="Close">×</button>
+      </div>
+
+      <div id="certViewContent" class="cert-view-content"></div>
+
+      <small class="cert-view-note">Certificate Preview</small>
+
+    </div>
+  </div>
+
+  <!-- DESIGNED PASSKEY POPUP -->
+  <div class="cert-small-modal cert-security-modal" id="certAccessModal">
+    <div class="cert-small-box cert-security-box">
+
+      <div class="cert-security-icon" id="certSecurityIcon">🔐</div>
+
+      <h3 id="certSecurityTitle">Protected Access</h3>
+
+      <p class="cert-security-subtitle" id="certSecuritySubtitle">
+        Enter your Passkey to manage certificates.
+      </p>
+
+      <form id="certAccessForm" autocomplete="off">
+
+        <label for="certPasskeyInput">Enter Passkey</label>
+
+        <div class="cert-passkey-input-wrap">
+          <input
+            type="password"
+            id="certPasskeyInput"
+            placeholder="Enter your 6-digit Passkey"
+            maxlength="6"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            autocomplete="off"
+            required
+          >
+
+          <button type="button" id="certTogglePasskey"
+            aria-label="Show Passkey">👁</button>
+        </div>
+
+        <div id="certSecurityMessage" class="cert-security-message"
+          role="status" aria-live="polite"></div>
+
+        <div id="certSecurityCountdown" class="cert-security-countdown"
+          hidden>
+          <span>🔒</span>
+          <strong id="certCountdownValue">30</strong>
+          <small>seconds remaining</small>
+        </div>
+
+        <div class="cert-security-actions">
+          <button type="button" id="certAccessCancel">Cancel</button>
+          <button type="submit" id="certAccessVerify">
+            Verify Passkey
+          </button>
+        </div>
+
+      </form>
+
+      <div class="cert-security-footer">
+        <span>🛡</span> Secure Certificate Management
+      </div>
+
+    </div>
+  </div>
+
+  <style>
+    /* TITLE */
+    #myCertificates .cert-title-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      min-height: 38px;
+    }
+
+    #myCertificates .cert-title-row h2 {
+      margin: 0;
+      text-align: center;
+    }
+
+    #myCertificates .cert-plus-btn {
+      position: static;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      border: 1px solid rgba(130,110,230,.5);
+      border-radius: 50%;
+      background: rgba(130,110,230,.12);
+      color: #9985ff;
+      font-size: 23px;
+      line-height: 1;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    #myCertificates .cert-plus-btn:hover {
+      background: #806ce9;
+      color: white;
+      transform: rotate(90deg);
+    }
+
+    /* CERTIFICATE LIST */
+    #myCertificates .cert-list {
+      margin-top: 18px;
+    }
+
+    #myCertificates .cert-item {
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(130,130,150,.2);
+    }
+
+    #myCertificates .cert-item:last-child {
+      border-bottom: none;
+    }
+
+    #myCertificates .cert-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    #myCertificates .cert-name {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    #myCertificates .cert-name:hover {
+      color: #9985ff;
+    }
+
+    #myCertificates .cert-arrow {
+      flex-shrink: 0;
+      font-size: 11px;
+      opacity: .65;
+      transition: .2s;
+    }
+
+    #myCertificates .cert-item.expanded .cert-arrow {
+      transform: rotate(180deg);
+    }
+
+    #myCertificates .cert-line-actions {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    #myCertificates .cert-action-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: inherit;
+      opacity: .75;
+      cursor: pointer;
+      font-size: 16px;
+      transition: .2s;
+    }
+
+    #myCertificates .cert-action-icon:hover {
+      opacity: 1;
+      color: #9985ff;
+      background: rgba(130,110,230,.12);
+    }
+
+    /* DESCRIPTION */
+    #myCertificates .cert-description {
+      display: none;
+      margin: 11px 0 3px;
+      padding: 15px 17px;
+      border-left: 3px solid #8875ef;
+      border-radius: 0 9px 9px 0;
+      background: rgba(130,110,230,.08);
+      font-size: 13px;
+      line-height: 1.8;
+      color: inherit;
+      overflow-wrap: anywhere;
+    }
+
+    #myCertificates .cert-item.expanded .cert-description {
+      display: block;
+      animation: certDrop .2s ease;
+    }
+
+    #myCertificates .cert-description .cert-meta-row {
+      display: grid;
+      grid-template-columns: 125px minmax(0, 1fr);
+      align-items: start;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    #myCertificates .cert-description .cert-meta-label {
+      font-weight: 700;
+      opacity: .8;
+      white-space: nowrap;
+    }
+
+    #myCertificates .cert-description .cert-description-text {
+      display: grid;
+      grid-template-columns: 125px minmax(0, 1fr);
+      align-items: start;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(130,130,150,.2);
+      white-space: normal;
+      line-height: 1.8;
+    }
+
+    #myCertificates .cert-description .cert-description-text strong {
+      white-space: nowrap;
+    }
+
+    #myCertificates .cert-description .cert-description-text > div {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    /* COMMON MODALS */
+    .cert-small-modal {
+      display: none;
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      z-index: 999999 !important;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-sizing: border-box;
+    }
+
+    .cert-small-modal.open {
+      display: flex !important;
+    }
+
+    .cert-small-box {
+      position: relative;
+      flex: 0 1 560px;
+      width: 100%;
+      max-width: 560px;
+      max-height: calc(100vh - 40px);
+      max-height: calc(100dvh - 40px);
+      margin: auto;
+      padding: 28px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 17px;
+      background: var(--card-bg, #ffffff);
+      color: var(--text-color, #242331);
+      border: 1px solid rgba(130,110,230,.3);
+      box-shadow: 0 20px 65px rgba(0,0,0,.3);
+      scrollbar-width: thin;
+      scrollbar-color: #8875ef transparent;
+      box-sizing: border-box;
+    }
+
+    .cert-small-box::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .cert-small-box::-webkit-scrollbar-thumb {
+      background: #8875ef;
+      border-radius: 10px;
+    }
+
+    .cert-popup-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(130,130,150,.2);
+    }
+
+    .cert-popup-heading h3 {
+      font-size: 21px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .cert-popup-heading button {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 8px;
+      background: rgba(130,130,150,.12);
+      color: inherit;
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    /* CERTIFICATE FORM */
+    #certForm {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    #certForm > label:not(.cert-file-label) {
+      margin-top: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: inherit;
+    }
+
+    #certForm input:not([type=file]),
+    #certForm textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: 12px 14px;
+      border: 1px solid rgba(130,130,150,.3);
+      border-radius: 9px;
+      outline: none;
+      background: rgba(130,130,150,.07);
+      color: inherit;
+      font-family: inherit;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: .2s;
+    }
+
+    #certForm textarea {
+      min-height: 115px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    #certForm input:focus,
+    #certForm textarea:focus {
+      border-color: #9985ff;
+      box-shadow: 0 0 0 3px rgba(130,110,230,.1);
+    }
+
+    #certForm input::placeholder,
+    #certForm textarea::placeholder {
+      color: inherit;
+      opacity: .5;
+    }
+
+    #certForm input[type="date"] {
+      color-scheme: light;
+    }
+
+    .cert-file-label {
+      display: block;
+      margin-top: 12px;
+      padding: 17px;
+      border: 1px dashed #9985ff;
+      border-radius: 10px;
+      background: rgba(130,110,230,.07);
+      text-align: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .cert-file-label:hover {
+      background: rgba(130,110,230,.14);
+    }
+
+    #certFile {
+      width: 100%;
+      margin-top: 5px;
+      font-size: 12px;
+      color: inherit;
+    }
+
+    #certFileName {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      opacity: .7;
+      overflow-wrap: anywhere;
+    }
+
+    .cert-popup-actions {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 22px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(130,130,150,.2);
+    }
+
+    .cert-popup-actions button {
+      min-width: 105px;
+      padding: 11px 20px;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    .cert-popup-actions button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #certCancelBtn {
+      background: rgba(130,130,150,.15);
+      color: inherit;
+    }
+
+    #certSaveBtn {
+      background: #806ce9;
+      color: white;
+    }
+
+    #certSaveBtn:hover {
+      background: #6e59d6;
+    }
+
+    /* VIEW POPUP */
+    .cert-small-box.cert-view-box {
+      flex: 0 1 950px;
+      width: 100%;
+      max-width: 950px;
+      max-height: calc(100vh - 40px);
+      max-height: calc(100dvh - 40px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cert-view-content {
+      width: 100%;
+      min-height: 300px;
+      height: min(65vh, 650px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: rgba(120,120,140,.1);
+      border: 1px solid rgba(130,130,150,.15);
+      border-radius: 10px;
+      box-sizing: border-box;
+    }
+
+    .cert-view-content img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .cert-view-content iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      border: 0;
+      background: white;
+    }
+
+    .cert-view-note {
+      display: block;
+      margin-top: 13px;
+      text-align: center;
+      font-size: 12px;
+      opacity: .6;
+    }
+
+    /* PASSKEY POPUP DESIGN */
+    .cert-small-box.cert-security-box {
+      flex: 0 1 410px;
+      max-width: 410px;
+      padding: 32px;
+      text-align: center;
+      overflow: hidden;
+      animation: certSecurityAppear .25s ease;
+    }
+
+    .cert-security-icon {
+      width: 66px;
+      height: 66px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 17px;
+      border-radius: 20px;
+      background: rgba(130,110,230,.13);
+      border: 1px solid rgba(130,110,230,.25);
+      font-size: 30px;
+    }
+
+    .cert-security-box h3 {
+      margin: 0 0 9px;
+      font-size: 22px;
+      font-weight: 750;
+    }
+
+    .cert-security-subtitle {
+      margin: 0 auto 25px;
+      max-width: 290px;
+      font-size: 13px;
+      line-height: 1.7;
+      opacity: .7;
+    }
+
+    #certAccessForm {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      gap: 10px;
+    }
+
+    #certAccessForm > label {
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .cert-passkey-input-wrap {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(130,110,230,.35);
+      border-radius: 11px;
+      background: rgba(130,110,230,.06);
+      overflow: hidden;
+      transition: .2s;
+    }
+
+    .cert-passkey-input-wrap:focus-within {
+      border-color: #8875ef;
+      box-shadow: 0 0 0 3px rgba(130,110,230,.12);
+    }
+
+    #certPasskeyInput {
+      width: 100%;
+      min-width: 0;
+      height: 49px;
+      padding: 12px 14px;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: inherit;
+      font-family: inherit;
+      font-size: 18px;
+      letter-spacing: 5px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    #certPasskeyInput::placeholder {
+      font-size: 12px;
+      letter-spacing: 1px;
+      opacity: .5;
+    }
+
+    #certTogglePasskey {
+      width: 45px;
+      height: 49px;
+      flex-shrink: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      opacity: .65;
+      font-size: 17px;
+    }
+
+    #certTogglePasskey:hover {
+      opacity: 1;
+    }
+
+    .cert-security-message {
+      min-height: 19px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #e05252;
+      text-align: center;
+    }
+
+    .cert-security-message.success {
+      color: #249b67;
+    }
+
+    .cert-security-countdown {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      margin: 5px 0 10px;
+      padding: 15px;
+      border: 1px solid rgba(224,82,82,.2);
+      border-radius: 12px;
+      background: rgba(224,82,82,.07);
+      color: #e05252;
+    }
+
+    .cert-security-countdown > span {
+      font-size: 22px;
+    }
+
+    .cert-security-countdown strong {
+      font-size: 32px;
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cert-security-countdown small {
+      font-size: 12px;
+    }
+
+    .cert-security-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .cert-security-actions button {
+      flex: 1;
+      min-height: 45px;
+      border: 0;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 650;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    #certAccessCancel {
+      background: rgba(130,130,150,.15);
+      color: inherit;
+    }
+
+    #certAccessVerify {
+      background: #806ce9;
+      color: white;
+    }
+
+    #certAccessVerify:hover {
+      background: #6e59d6;
+    }
+
+    .cert-security-actions button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .cert-security-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 23px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(130,130,150,.17);
+      font-size: 11px;
+      opacity: .6;
+    }
+
+    @keyframes certSecurityAppear {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* DARK THEME */
+    body.dark-mode .cert-small-box,
+    body.dark .cert-small-box,
+    body[data-theme="dark"] .cert-small-box,
+    [data-theme="dark"] .cert-small-box {
+      background: var(--card-bg, #1c1c2b);
+      color: var(--text-color, #f1f0f8);
+      border-color: rgba(160,140,255,.25);
+    }
+
+    body.dark-mode #certForm input:not([type=file]),
+    body.dark-mode #certForm textarea,
+    body.dark #certForm input:not([type=file]),
+    body.dark #certForm textarea,
+    body[data-theme="dark"] #certForm input:not([type=file]),
+    body[data-theme="dark"] #certForm textarea,
+    [data-theme="dark"] #certForm input:not([type=file]),
+    [data-theme="dark"] #certForm textarea {
+      background: rgba(255,255,255,.06);
+      color: #f1f0f8;
+      border-color: rgba(255,255,255,.17);
+    }
+
+    body.dark-mode .cert-passkey-input-wrap,
+    body.dark .cert-passkey-input-wrap,
+    body[data-theme="dark"] .cert-passkey-input-wrap,
+    [data-theme="dark"] .cert-passkey-input-wrap {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.18);
+    }
+
+    /* LIGHT THEME */
+    body.light-mode .cert-small-box,
+    body.light .cert-small-box,
+    body[data-theme="light"] .cert-small-box,
+    [data-theme="light"] .cert-small-box {
+      background: var(--card-bg, #ffffff);
+      color: var(--text-color, #242331);
+      border-color: rgba(100,90,160,.2);
+    }
+
+    body.light-mode #certForm input:not([type=file]),
+    body.light-mode #certForm textarea,
+    body.light #certForm input:not([type=file]),
+    body.light #certForm textarea,
+    body[data-theme="light"] #certForm input:not([type=file]),
+    body[data-theme="light"] #certForm textarea,
+    [data-theme="light"] #certForm input:not([type=file]),
+    [data-theme="light"] #certForm textarea {
+      background: #f7f7fb;
+      color: #242331;
+      border-color: rgba(100,90,160,.22);
+    }
+
+    @keyframes certDrop {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* MOBILE */
+    @media(max-width:600px) {
+      .cert-small-modal {
+        padding: 12px;
+      }
+
+      .cert-small-box {
+        flex: 0 1 auto;
+        width: 100%;
+        max-width: 100%;
+        max-height: calc(100vh - 24px);
+        max-height: calc(100dvh - 24px);
+        padding: 21px;
+        border-radius: 13px;
+      }
+
+      .cert-popup-heading h3 {
+        font-size: 19px;
+      }
+
+      #myCertificates .cert-description {
+        padding: 12px;
+        font-size: 12px;
+      }
+
+      #myCertificates .cert-name {
+        font-size: 13px;
+      }
+
+      #myCertificates .cert-action-icon {
+        width: 27px;
+        height: 27px;
+      }
+
+      .cert-small-box.cert-view-box {
+        max-height: calc(100vh - 24px);
+        max-height: calc(100dvh - 24px);
+      }
+
+      .cert-view-content {
+        min-height: 250px;
+        height: 60vh;
+      }
+
+      .cert-view-content iframe {
+        min-height: 250px;
+      }
+
+      .cert-small-box.cert-security-box {
+        flex: 0 1 auto;
+        max-width: 100%;
+        padding: 25px 21px;
+      }
+
+      #myCertificates .cert-description .cert-meta-row,
+      #myCertificates .cert-description .cert-description-text {
+        grid-template-columns: 110px minmax(0, 1fr);
+      }
+    }
+  </style>
+
+  <script>
+  (() => {
+    const root = document.getElementById("myCertificates");
+    if (!root || root.dataset.ready) return;
+    root.dataset.ready = "true";
+
+    const $ = id => document.getElementById(id);
+
+    const DB = "NiteshCertificates";
+    const STORE = "items";
+    const MAX_SIZE = 10 * 1024 * 1024;
+
+    /* PASSKEY SETTINGS */
+   /* PASSKEY SETTINGS */
+const PASSKEY_HASH =
+  "2ebac8cd0516739bc88496bb26eaf9d62344ced0f4b0b48cdc1a1ec5e8954553";
+
+const MAX_ATTEMPTS = 3;
+const LOCK_DURATION = 30 * 1000;
+const SECURITY_KEY = "certSecurityState";
+
+    let db, editingId = null, selectedFile = null;
+    let viewerUrl = null;
+    let expandedId = null;
+    let previousBodyOverflow = "";
+    let pendingAction = null;
+    let lockTimer = null;
+
+    const formModal = $("certFormModal");
+    const viewModal = $("certViewModal");
+    const accessModal = $("certAccessModal");
+
+    /*
+      Move modals into body to prevent clipping
+      from parent animation, overflow and transforms.
+    */
+    document.body.appendChild(formModal);
+    document.body.appendChild(viewModal);
+    document.body.appendChild(accessModal);
+
+    /* =====================================
+       SECURITY STATE
+       ===================================== */
+
+    function getSecurityState() {
+      try {
+        const state = JSON.parse(
+          sessionStorage.getItem(SECURITY_KEY)
+        );
+
+        if (
+          !state ||
+          typeof state.attempts !== "number" ||
+          typeof state.lockUntil !== "number"
+        ) {
+          return { attempts: 0, lockUntil: 0 };
+        }
+
+        return state;
+      } catch {
+        return { attempts: 0, lockUntil: 0 };
+      }
+    }
+
+    function setSecurityState(state) {
+      try {
+        sessionStorage.setItem(
+          SECURITY_KEY,
+          JSON.stringify(state)
+        );
+      } catch (error) {
+        console.error("Security state unavailable:", error);
+      }
+    }
+
+    function openModal(modal) {
+      if (!document.querySelector(".cert-small-modal.open")) {
+        previousBodyOverflow = document.body.style.overflow;
+      }
+
+      modal.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove("open");
+
+      if (!document.querySelector(".cert-small-modal.open")) {
+        document.body.style.overflow = previousBodyOverflow;
+      }
+    }
+
+    function clearSecurityMessage() {
+      const message = $("certSecurityMessage");
+      message.textContent = "";
+      message.className = "cert-security-message";
+    }
+
+    function updateSecurityUI() {
+      const state = getSecurityState();
+      const locked = state.lockUntil > Date.now();
+
+      $("certPasskeyInput").disabled = locked;
+      $("certAccessVerify").disabled = locked;
+      $("certTogglePasskey").disabled = locked;
+
+      $("certSecurityCountdown").hidden = !locked;
+      $("certPasskeyInput").style.display = locked ? "none" : "";
+      $("certTogglePasskey").style.display = locked ? "none" : "";
+
+      if (locked) {
+        $("certSecurityIcon").textContent = "🔒";
+        $("certSecurityTitle").textContent = "Access Temporarily Locked";
+        $("certSecuritySubtitle").textContent =
+          "Too many incorrect attempts. Please wait before trying again.";
+
+        $("certSecurityMessage").textContent = "";
+        $("certAccessVerify").textContent = "Please Wait";
+
+      } else {
+        $("certSecurityIcon").textContent = "🔐";
+        $("certSecurityTitle").textContent = "Protected Access";
+        $("certSecuritySubtitle").textContent =
+          "Enter your Passkey to manage certificates.";
+
+        $("certAccessVerify").textContent = "Verify Passkey";
+      }
+    }
+
+    function startLockCountdown() {
+      if (lockTimer) {
+        clearInterval(lockTimer);
+        lockTimer = null;
+      }
+
+      updateSecurityUI();
+
+      const countdownValue = $("certCountdownValue");
+
+      function tick() {
+        const state = getSecurityState();
+
+        const remaining = Math.max(
+          0,
+          Math.ceil((state.lockUntil - Date.now()) / 1000)
+        );
+
+        countdownValue.textContent = remaining;
+
+        if (remaining <= 0) {
+          clearInterval(lockTimer);
+          lockTimer = null;
+
+          setSecurityState({
+            attempts: 0,
+            lockUntil: 0
+          });
+
+          updateSecurityUI();
+
+          $("certSecurityMessage").textContent =
+            "You can try your Passkey again now.";
+
+          $("certPasskeyInput").value = "";
+          $("certPasskeyInput").focus();
+        }
+      }
+
+      tick();
+      lockTimer = setInterval(tick, 250);
+    }
+
+    function openAccessModal(action) {
+      pendingAction = action;
+
+      $("certPasskeyInput").value = "";
+      $("certPasskeyInput").type = "password";
+      $("certTogglePasskey").textContent = "👁";
+
+      clearSecurityMessage();
+
+      const state = getSecurityState();
+
+      openModal(accessModal);
+
+      if (state.lockUntil > Date.now()) {
+        startLockCountdown();
+      } else {
+        if (state.lockUntil) {
+          setSecurityState({
+            attempts: 0,
+            lockUntil: 0
+          });
+        }
+
+        updateSecurityUI();
+
+        setTimeout(() => {
+          if (accessModal.classList.contains("open")) {
+            $("certPasskeyInput").focus();
+          }
+        }, 100);
+      }
+    }
+
+    function closeAccessModal() {
+      pendingAction = null;
+      $("certPasskeyInput").value = "";
+      clearSecurityMessage();
+
+      closeModal(accessModal);
+    }
+
+    function showSecurityError(message) {
+      const element = $("certSecurityMessage");
+      element.textContent = message;
+      element.className = "cert-security-message";
+    }
+
+    function showSecuritySuccess(message) {
+      const element = $("certSecurityMessage");
+      element.textContent = message;
+      element.className = "cert-security-message success";
+    }
+
+    async function hashPasskey(value) {
+  const data = new TextEncoder().encode(value);
+
+  const hashBuffer = await crypto.subtle.digest(
+    "SHA-256",
+    data
+  );
+
+  return Array.from(new Uint8Array(hashBuffer))
+    .map(byte => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function verifyPasskey() {
+  const state = getSecurityState();
+
+  if (state.lockUntil > Date.now()) {
+    startLockCountdown();
+    return;
+  }
+
+  const entered = $("certPasskeyInput").value.trim();
+
+  if (!/^[0-9]{6}$/.test(entered)) {
+    showSecurityError("Please enter your 6-digit Passkey.");
+    $("certPasskeyInput").focus();
+    return;
+  }
+
+  let enteredHash;
+
+  try {
+    enteredHash = await hashPasskey(entered);
+  } catch (error) {
+    console.error("Passkey hashing failed:", error);
+    showSecurityError(
+      "Secure verification unavailable. Please use HTTPS."
+    );
+    return;
+  }
+
+  if (enteredHash === PASSKEY_HASH) {
+    const action = pendingAction;
+
+    setSecurityState({
+      attempts: 0,
+      lockUntil: 0
+    });
+
+    pendingAction = null;
+
+    closeModal(accessModal);
+
+    $("certPasskeyInput").value = "";
+
+    if (typeof action === "function") {
+      await action();
+    }
+
+    return;
+  }
+
+  state.attempts++;
+
+  if (state.attempts >= MAX_ATTEMPTS) {
+    state.attempts = 0;
+    state.lockUntil = Date.now() + LOCK_DURATION;
+
+    setSecurityState(state);
+
+    $("certPasskeyInput").value = "";
+
+    showSecurityError(
+      "3 incorrect attempts. Access locked for 30 seconds."
+    );
+
+    startLockCountdown();
+    return;
+  }
+
+  setSecurityState(state);
+
+  const remaining = MAX_ATTEMPTS - state.attempts;
+
+  showSecurityError(
+    "Incorrect Passkey. " +
+    remaining +
+    (remaining === 1
+      ? " attempt remaining."
+      : " attempts remaining.")
+  );
+
+  $("certPasskeyInput").value = "";
+  $("certPasskeyInput").focus();
+}
+
+    $("certAccessForm").addEventListener("submit", async e => {
+      e.preventDefault();
+
+      if ($("certAccessVerify").disabled) return;
+
+      $("certAccessVerify").disabled = true;
+
+      try {
+        await verifyPasskey();
+      } catch (error) {
+        console.error(error);
+        showSecurityError("Something went wrong. Please try again.");
+      } finally {
+        if (accessModal.classList.contains("open")) {
+          updateSecurityUI();
+        }
+      }
+    });
+
+    $("certAccessCancel").addEventListener("click", closeAccessModal);
+
+    $("certTogglePasskey").addEventListener("click", () => {
+      const input = $("certPasskeyInput");
+
+      if (input.type === "password") {
+        input.type = "text";
+        $("certTogglePasskey").textContent = "🙈";
+      } else {
+        input.type = "password";
+        $("certTogglePasskey").textContent = "👁";
+      }
+
+      input.focus();
+    });
+
+    $("certPasskeyInput").addEventListener("input", () => {
+      $("certPasskeyInput").value =
+        $("certPasskeyInput").value.replace(/\D/g, "").slice(0, 6);
+
+      if ($("certSecurityMessage").textContent) {
+        clearSecurityMessage();
+      }
+    });
+
+    /* =====================================
+       INDEXEDDB
+       ===================================== */
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB, 1);
+
+        request.onupgradeneeded = e => {
+          const database = e.target.result;
+
+          if (!database.objectStoreNames.contains(STORE)) {
+            database.createObjectStore(STORE, {
+              keyPath: "id",
+              autoIncrement: true
+            });
+          }
+        };
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    function request(mode, action) {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE, mode);
+        const req = action(tx.objectStore(STORE));
+
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    const getAll = () => request("readonly", s => s.getAll());
+    const save = data => request("readwrite", s => s.put(data));
+    const remove = id => request("readwrite", s => s.delete(id));
+
+    /* =====================================
+       FORM RESET
+       ===================================== */
+
+    function resetForm() {
+      $("certForm").reset();
+
+      selectedFile = null;
+      editingId = null;
+
+      $("certFileName").textContent = "No file selected";
+      $("certFormHeading").textContent = "Add Certificate";
+      $("certSaveBtn").textContent = "Save Certificate";
+      $("certFile").required = false;
+
+      closeModal(formModal);
+    }
+
+    /* =====================================
+       ADD CERTIFICATE
+       ===================================== */
+
+    $("certAddBtn").addEventListener("click", () => {
+      openAccessModal(() => {
+        resetForm();
+        $("certFile").required = true;
+        openModal(formModal);
+      });
+    });
+
+    $("certFormClose").addEventListener("click", resetForm);
+    $("certCancelBtn").addEventListener("click", resetForm);
+
+    $("certFile").addEventListener("change", e => {
+      selectedFile = e.target.files[0] || null;
+
+      $("certFileName").textContent =
+        selectedFile ? selectedFile.name : "No file selected";
+    });
+
+    /* =====================================
+       HELPERS
+       ===================================== */
+
+    function escape(value) {
+      return String(value || "").replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[c]);
+    }
+
+    function dateText(value) {
+      if (!value) return "";
+
+      const d = new Date(value + "T00:00:00");
+
+      return Number.isNaN(d.getTime())
+        ? ""
+        : d.toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+          });
+    }
+
+    /* =====================================
+       RENDER
+       ===================================== */
+
+    async function render() {
+      const items = await getAll();
+      const list = $("certList");
+
+      list.innerHTML = "";
+
+      if (!items.length) {
+        list.innerHTML =
+          '<p class="cert-empty">No certificates added yet.</p>';
+        return;
+      }
+
+      items.sort((a, b) => b.id - a.id);
+
+      items.forEach(cert => {
+        const item = document.createElement("div");
+
+        item.className = "cert-item" +
+          (expandedId === cert.id ? " expanded" : "");
+
+        item.innerHTML = `
+          <div class="cert-line">
+            <div class="cert-name" data-action="expand">
+              <span>✔</span>
+              <span>${escape(cert.title)}</span>
+              <span class="cert-arrow">▼</span>
+            </div>
+
+            <div class="cert-line-actions">
+              <button type="button" class="cert-action-icon"
+                data-action="view" aria-label="View certificate"
+                title="View">◉</button>
+
+              <button type="button" class="cert-action-icon"
+                data-action="edit" aria-label="Edit certificate"
+                title="Edit">✎</button>
+
+              <button type="button" class="cert-action-icon"
+                data-action="delete" aria-label="Delete certificate"
+                title="Delete">×</button>
+            </div>
+          </div>
+
+          <div class="cert-description">
+            <div class="cert-meta-row">
+              <span class="cert-meta-label">Organization:</span>
+              <span>${escape(cert.organization)}</span>
+            </div>
+
+            ${cert.date ? `
+              <div class="cert-meta-row">
+                <span class="cert-meta-label">Issue Date:</span>
+                <span>${escape(dateText(cert.date))}</span>
+              </div>
+            ` : ""}
+
+            ${cert.credential ? `
+              <div class="cert-meta-row">
+                <span class="cert-meta-label">Credential ID:</span>
+                <span>${escape(cert.credential)}</span>
+              </div>
+            ` : ""}
+
+            ${cert.description ? `
+              <div class="cert-description-text">
+                <strong>Description:</strong>
+                <div>${escape(cert.description)}</div>
+              </div>
+            ` : ""}
+          </div>
+        `;
+
+        item.querySelector('[data-action="expand"]')
+          .addEventListener("click", () => {
+            expandedId = expandedId === cert.id ? null : cert.id;
+            render();
+          });
+
+        item.querySelector('[data-action="view"]')
+          .addEventListener("click", () => view(cert));
+
+        item.querySelector('[data-action="edit"]')
+          .addEventListener("click", () => {
+            openAccessModal(() => edit(cert));
+          });
+
+        item.querySelector('[data-action="delete"]')
+          .addEventListener("click", () => {
+            openAccessModal(() => deleteItem(cert.id));
+          });
+
+        list.appendChild(item);
+      });
+    }
+
+    /* =====================================
+       SAVE / UPDATE
+       ===================================== */
+
+    $("certForm").addEventListener("submit", async e => {
+      e.preventDefault();
+
+      const wasEditing = editingId !== null;
+      const title = $("certTitle").value.trim();
+      const organization = $("certOrganization").value.trim();
+
+      if (!title || !organization) return;
+
+      if (selectedFile) {
+        const valid = [
+          "application/pdf",
+          "image/jpeg",
+          "image/png"
+        ];
+
+        if (!valid.includes(selectedFile.type)) {
+          alert("Only PDF, JPG and PNG files are allowed.");
+          return;
+        }
+
+        if (selectedFile.size > MAX_SIZE) {
+          alert("Maximum file size is 10 MB.");
+          return;
+        }
+      }
+
+      const button = $("certSaveBtn");
+      button.disabled = true;
+      button.textContent = "Saving...";
+
+      try {
+        const old = wasEditing
+          ? (await getAll()).find(x => x.id === editingId)
+          : null;
+
+        const file = selectedFile || old?.file;
+
+        if (!file) {
+          alert("Please upload certificate file.");
+          return;
+        }
+
+        await save({
+          ...(old || {}),
+          ...(wasEditing ? { id: editingId } : {}),
+          title,
+          organization,
+          date: $("certDate").value,
+          credential: $("certCredential").value.trim(),
+          description: $("certDescription").value.trim(),
+          file,
+          fileName: selectedFile?.name || old?.fileName,
+          fileType: selectedFile?.type || old?.fileType
+        });
+
+        expandedId = wasEditing ? editingId : null;
+
+        resetForm();
+        await render();
+
+      } catch (error) {
+        console.error(error);
+        alert("Unable to save certificate. Check browser storage.");
+
+      } finally {
+        button.disabled = false;
+
+        button.textContent = wasEditing
+          ? "Update Certificate"
+          : "Save Certificate";
+      }
+    });
+
+    /* =====================================
+       VIEW
+       ===================================== */
+
+    function view(cert) {
+      if (!cert.file) {
+        alert("No certificate file uploaded.");
+        return;
+      }
+
+      if (viewerUrl) {
+        URL.revokeObjectURL(viewerUrl);
+      }
+
+      viewerUrl = URL.createObjectURL(cert.file);
+
+      $("certViewTitle").textContent = cert.title;
+
+      const content = $("certViewContent");
+      content.innerHTML = "";
+
+      if (cert.fileType === "application/pdf") {
+        const frame = document.createElement("iframe");
+
+        frame.title = "Certificate preview";
+        frame.src = viewerUrl + "#toolbar=0&navpanes=0";
+
+        content.appendChild(frame);
+      } else {
+        const img = document.createElement("img");
+
+        img.src = viewerUrl;
+        img.alt = "Certificate preview";
+        img.draggable = false;
+
+        content.appendChild(img);
+      }
+
+      openModal(viewModal);
+    }
+
+    function closeViewer() {
+      closeModal(viewModal);
+      $("certViewContent").innerHTML = "";
+
+      if (viewerUrl) {
+        URL.revokeObjectURL(viewerUrl);
+        viewerUrl = null;
+      }
+    }
+
+    $("certViewClose").addEventListener("click", closeViewer);
+
+    /* =====================================
+       EDIT
+       ===================================== */
+
+    async function edit(cert) {
+      editingId = cert.id;
+      selectedFile = null;
+
+      $("certTitle").value = cert.title;
+      $("certOrganization").value = cert.organization;
+      $("certDate").value = cert.date || "";
+      $("certCredential").value = cert.credential || "";
+      $("certDescription").value = cert.description || "";
+
+      $("certFileName").textContent =
+        "Current file: " + (cert.fileName || "Uploaded certificate");
+
+      $("certFile").required = false;
+      $("certFormHeading").textContent = "Edit Certificate";
+      $("certSaveBtn").textContent = "Update Certificate";
+
+      openModal(formModal);
+    }
+
+    /* =====================================
+       DELETE
+       ===================================== */
+
+    async function deleteItem(id) {
+      if (!confirm("Delete this certificate?")) return;
+
+      try {
+        await remove(id);
+
+        if (expandedId === id) {
+          expandedId = null;
+        }
+
+        await render();
+
+      } catch (error) {
+        console.error(error);
+        alert("Unable to delete certificate.");
+      }
+    }
+
+    /* =====================================
+       OTHER EVENTS
+       ===================================== */
+
+    $("certViewContent").addEventListener("contextmenu", e => {
+      e.preventDefault();
+    });
+
+    [formModal, viewModal, accessModal].forEach(modal => {
+      modal.addEventListener("click", e => {
+        if (e.target !== modal) return;
+
+        if (modal === viewModal) {
+          closeViewer();
+        } else if (modal === formModal) {
+          resetForm();
+        } else {
+          closeAccessModal();
+        }
+      });
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        if (accessModal.classList.contains("open")) {
+          closeAccessModal();
+        } else if (viewModal.classList.contains("open")) {
+          closeViewer();
+        } else if (formModal.classList.contains("open")) {
+          resetForm();
+        }
+      }
+    });
+
+    /* =====================================
+       INITIALIZE
+       ===================================== */
+
+    openDB()
+      .then(database => {
+        db = database;
+
+        const state = getSecurityState();
+
+        if (state.lockUntil > Date.now()) {
+          // Restore existing lockout when the page is reopened.
+          // The popup itself opens when a protected action is attempted.
+        } else if (state.lockUntil) {
+          setSecurityState({
+            attempts: 0,
+            lockUntil: 0
+          });
+        }
+
+        return render();
+      })
+      .catch(error => {
+        console.error(error);
+
+        $("certList").innerHTML =
+          '<p>Certificate storage unavailable. Please check IndexedDB.</p>';
+      });
+
+  })();
+  </script>
+
+</section>
+
+
+
+
 
 
   </main>

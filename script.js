@@ -43,7 +43,7 @@ themeBtn?.addEventListener("click", () => {
 /* =========================
    TYPING TEXT ANIMATION
 ========================= */
-const texts = ["Full Stack Web Developer", "Frontend Developer", "UI/UX Designer", "PHP Developer"];
+const texts = ["Full Stack Web Developer", "Frontend Developer", "UI/UX Designer", "React.js Developer"];
 let textIndex = 0, charIndex = 0;
 const typingEl = document.querySelector(".typing");
 
